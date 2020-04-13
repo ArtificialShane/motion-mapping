@@ -37,6 +37,15 @@ Currently does not work for Ubuntu 18.04 due to unsupported dependencies.
         pip install future
         pip install pandas
 
+    NOTE: if you are having trouble with installation of Numpy (as of Jan 1 2020 Numpy requires Python 3.5 or greater), try the following:
+
+		pip install numpy==1.16.2
+		pip install pandas==0.24.2 --no-deps
+		pip install python-dateutil==2.8.1
+		pip install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html --no-deps
+		pip install pepper_kinematics --no-deps
+		pip install scipy==1.2.2 --no-deps
+
 # Using the ROS package
 
         roslaunch move_pepper move_pepper.launch 
@@ -50,3 +59,12 @@ Additional argument changes can be made in the joint_convert.launch file:
 - `<arg name="bag_path" default="/path/to/rosbag" />`
 - `<arg name="bag_playback_rate" default="1"/>`
 - `<arg name="model_dir" default="$(find joint_converter)/models" />`
+
+# Troubleshooting
+1. If you see `chown: missing operand after ‘/usr/etc/nuitrack/data’` when you try to install the Nuitrack Linux Driver, do
+
+		sudo chown -R $USER /usr/etc/nuitrack/data/
+
+2. If you see `/usr/bin/ld: warning: libbluetooth.so.3, needed ...` during catkin_make, do
+
+		sudo apt-get install libbluetooth-dev
